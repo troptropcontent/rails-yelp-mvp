@@ -1,0 +1,50 @@
+<h1><%= @restaurant.name %></h1>
+<h2><%= @restaurant.address %></h2>
+<p><%= @restaurant.category %></p>
+<div class="ratings-block">
+<div class="ratings-head">
+  <div class="stars">
+    <div class="stars-icon">
+      <% average_rating = 0 %>
+      <% @restaurant.reviews.each{|review| average_rating += review.rating}%>
+      <% average_rating = @restaurant.reviews.count==0 ? 0 : average_rating/@restaurant.reviews.count%>
+      <% average_rating.times do%>
+        <i class="fas fa-star star-full"></i>
+      <% end%>
+      <% (5-average_rating).times do%>
+        <i class="fas fa-star star-empty"></i>
+      <% end%>
+    </div>
+    <p class="stars-count">(<%= @restaurant.reviews.count %>)</p>
+  </div>
+  <div class="ratings-link">
+    <%= link_to "Leave a comment", new_restaurant_review_path(@restaurant) %>
+  </div>  
+</div>
+  <div class="rating-list">
+    <ul>
+      <% @restaurant.reviews.each do |review|  %>
+      <li>
+        <div class="card">
+          <div class="card-top">
+            <p>Anonymous</p>
+            <div class="stars">
+              <div class="stars-icon">
+                <% review.rating.times do%>
+                  <i class="fas fa-star star-full"></i>
+                <% end%>
+                <% (5-review.rating).times do%>
+                  <i class="fas fa-star star-empty"></i>
+                <% end%>
+              </div>              
+            </div>
+          </div>
+          <div class="card-content">
+            <p><%= review.content %></p>
+          </div>
+        </div>
+      </li>
+      <% end  %>
+    </ul>
+  </div>
+</div>

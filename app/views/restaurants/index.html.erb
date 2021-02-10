@@ -1,0 +1,31 @@
+<h1>List of the restaurant</h1>
+
+<ul>
+  <% @restaurants.each do |restaurant| %>
+    <% average_rating = 0 %>
+    <% output = '' %>
+    <% restaurant.reviews.each{|review| average_rating += review.rating}%>
+    <% average_rating = restaurant.reviews.count==0 ? 0 : average_rating/restaurant.reviews.count%>
+    <li>
+      <div class="card">
+        <div class="card-text col-8">
+          <%= link_to(restaurant) do %>
+            <h2><%= restaurant.name %></h2>
+          <% end %>
+          <p><%= restaurant.address %></p>
+          <div class="stars">
+            <% average_rating.times do%>
+              <i class="fas fa-star star-full"></i>
+            <% end%>
+            <% (5-average_rating).times do%>
+              <i class="fas fa-star star-empty"></i>
+            <% end%>
+            <p>(<%= restaurant.reviews.count %>)</p>
+          </div>             
+        </div>
+        <div class="card-photo col-4">
+        </div>
+      </div>
+    </li>
+  <% end%>
+</ul>
